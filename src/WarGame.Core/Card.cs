@@ -24,7 +24,20 @@ public enum Rank
     Ace
 }
 
-public class Card
+public class Card : IComparable<Card> 
 {
+    public Suit Suit { get; set; }
+    public Rank Rank { get; set; }
 
+    public Card(Rank rank, Suit suit)
+    {
+        Rank = rank;
+        Suit = suit;
+    }
+
+    public int CompareTo(Card othercard)
+    {
+        if (othercard == null) return -1;
+        else return this.Rank.CompareTo(othercard.Rank);
+    }
 }
