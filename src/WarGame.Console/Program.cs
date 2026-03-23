@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using WarGame.Core;
+Game WarGame = new Game();
+WarGame.StartGame();
+WarGame.DistributeDeck();
+WarGame.Play();
