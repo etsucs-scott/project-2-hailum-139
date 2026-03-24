@@ -21,7 +21,7 @@ public class Game
     {
         int playernumber = 0;
         bool gamecanstart = false;
-        while (!gamecanstart)
+        while (!gamecanstart)//this loop ensures that the user inputs the appropriate number of player to start the game
         {
             Console.WriteLine("Enter the number of players(2-4): ");
             string word = Console.ReadLine();
@@ -51,7 +51,7 @@ public class Game
         {
             foreach (string name in this.Names)
             {
-                if (this.GameDeck.Count() == 0) break;
+                if (this.GameDeck.Count() == 0) break;//this ensures that the loop stops distributing cards if the deck reaches zero otherwise it might start giving out null cards
 
                 Card card = this.GameDeck.Draw();
                 this.HandOrganizer.AddCard(name, card);
@@ -63,7 +63,7 @@ public class Game
         int rounds = 0;
         const int maxRounds = 10000;
 
-        while (HandOrganizer.GetActivePlayer().Count > 1 && rounds < maxRounds)
+        while (HandOrganizer.GetActivePlayer().Count > 1 && rounds < maxRounds)//this loop ensures that the game only continues if there is more than 1 player still in the game or if the max round is reached
         {
             rounds++;
             ExecuteRound(rounds);
@@ -75,14 +75,14 @@ public class Game
     {
         Console.Clear();
         Console.WriteLine($"Round {roundNumber}");
-
+        //this is to ensure that there are no leaks incase of code changes in the future that might cause leaks or if the potclear method isn't used properly
         CurrentRound.CardsforRound.Pot.Clear();
         CurrentRound.CardsforRound.RoundCards.Clear();
 
         List<string> activeInRound = HandOrganizer.GetActivePlayer();
         bool isTie = false;
 
-        while (activeInRound.Count > 1)
+        while (activeInRound.Count > 1)//this is to ensure that round continues as long as there are players with the same highest rank
         {
             List<string> playernames = new List<string>();
 
@@ -100,7 +100,7 @@ public class Game
 
             activeInRound = CurrentRound.GetWinnerList();
 
-            if (activeInRound.Count > 1)
+            if (activeInRound.Count > 1)//if there is more than one winner this tells the computer how to continue since there is going to be different ouput for a tiebreaker round than a regular round
             {
                 isTie = true;
                 Console.WriteLine($"Tie between {string.Join(" and ", activeInRound)}!");
@@ -109,7 +109,7 @@ public class Game
                 Console.WriteLine($"Pot includes: {potContents}");
 
                 activeInRound = activeInRound.Where(n => HandOrganizer.Players[n].Count() > 0).ToList();
-                if (activeInRound.Count <= 1) break;
+                if (activeInRound.Count <= 1) break;// this is to ensure that if a player where to run out of cards during a tiebreaker they get eliminated
             }
         }
 
@@ -132,7 +132,7 @@ public class Game
         HandOrganizer.EliminatePlayers();
 
         Console.WriteLine("[ Press any key for next round ]");
-        Console.ReadKey(true);
+        Console.ReadKey(true);//these two statements are to have a clear output during each round
     }
 
     private void DetermineWinner(bool hitLimit)

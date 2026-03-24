@@ -9,7 +9,7 @@ public class Round
         CardsforRound = new PlayedCards();
     }
 
-    public void RevealTopCard(string playername, Card card)
+    public void RevealTopCard(string playername, Card card)//The methods used on the PlayedCards field are encapsulated in these methods to protect invariants
     {
         CardsforRound.PlayCard(playername, card);
     }
